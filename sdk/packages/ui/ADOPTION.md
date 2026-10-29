@@ -13,7 +13,7 @@ styles or adopting desktop product structure.
 
 The theme provides:
 
-- Cline-owned Slate, Violet, Ruby, Green, Amber, and Sky solid/alpha palettes
+- Cline-owned Slate, Iris, Vermilion, Emerald, Amber, and Sky solid/alpha palettes
 - Light and dark semantic colors
 - Standard shadcn token names
 - Typography families, sizes, weights, line heights, and letter spacing
@@ -519,6 +519,16 @@ semantics:
   --focus-ring: var(--accent-8);
 }
 ```
+
+Author solid palette values and semantic roles, then run `bun run generate:theme`
+to update the alpha palette, scoped tokens and component mappings. Generated
+alpha values reproduce solids over `--neutral-1` within 3/255 per sRGB channel.
+
+Use `--accent-foreground`, `--error-text` and the other status `-text` roles for
+small colored text. Filled controls pair `--primary` with `--primary-foreground`
+or status `-solid` with `-contrast`; the fill itself is not a text color.
+`--card` blends with the host surface, while `--card-surface` provides an opaque
+background for diagrams and exports. Existing token names remain available.
 
 Use the small `--brand-*` palette only for branded artwork. Normal controls
 should prefer visual/status roles or shadcn semantic tokens so they continue to
