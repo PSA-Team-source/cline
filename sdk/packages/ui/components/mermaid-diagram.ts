@@ -646,7 +646,7 @@ export type MermaidColorMode = "dark" | "light";
 
 /** Resolved Cline design tokens the diagram theme is derived from. */
 export interface MermaidThemeTokens {
-	/** Diagram surface (`--card`); also the PNG background fill. */
+	/** Opaque diagram surface (`--card-surface`); also the PNG background fill. */
 	background: string;
 	border: string;
 	/** Destructive/error role color (`--destructive`). */

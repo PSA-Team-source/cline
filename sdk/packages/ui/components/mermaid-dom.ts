@@ -7,9 +7,11 @@ import {
 	type MermaidColorMode,
 	type MermaidThemeTokens,
 	normalizeMermaidTokens,
+	parseCssColor,
 	prepareSvgForRaster,
 	resolveMermaidFontFamily,
 	resolvePngDesiredScale,
+	rgbToHex,
 } from "./mermaid-diagram.js";
 
 /**
@@ -21,7 +23,7 @@ import {
 
 // Custom property backing each Mermaid theme token.
 const TOKEN_VARIABLES = {
-	background: "--card",
+	background: "--card-surface",
 	border: "--border",
 	error: "--destructive",
 	foreground: "--foreground",
@@ -63,8 +65,8 @@ export function detectColorMode(root?: Element): MermaidColorMode {
 
 let scratchContext: CanvasRenderingContext2D | null | undefined;
 
-/** Canvas fallback for color syntaxes the pure parser doesn't cover. */
-function canvasColorToHex(value: string): string | null {
+/** Composite unsupported CSS color syntaxes over an opaque diagram surface. */
+function canvasColorToHex(value: string, background: string): string | null {
 	if (typeof document === "undefined") return null;
 	if (scratchContext === undefined) {
 		const canvas = document.createElement("canvas");
@@ -80,18 +82,35 @@ function canvasColorToHex(value: string): string | null {
 	if (context.fillStyle === "#010203" && cssColorToHex(value) === null) {
 		return null;
 	}
+	const fill = context.fillStyle;
 	context.clearRect(0, 0, 1, 1);
+	context.fillStyle = background;
 	context.fillRect(0, 0, 1, 1);
-	const [r = 0, g = 0, b = 0, a = 255] = context.getImageData(0, 0, 1, 1).data;
-	if (a === 0) return null;
+	context.fillStyle = fill;
+	context.fillRect(0, 0, 1, 1);
+	const [r = 0, g = 0, b = 0] = context.getImageData(0, 0, 1, 1).data;
 	const channel = (n: number) => n.toString(16).padStart(2, "0");
 	return `#${channel(r)}${channel(g)}${channel(b)}`;
 }
 
-function resolveTokenColor(style: CSSStyleDeclaration, name: string): string {
+function resolveTokenColor(
+	style: CSSStyleDeclaration,
+	name: string,
+	background: string,
+): string {
 	const raw = style.getPropertyValue(name).trim();
 	if (!raw) return "";
-	return cssColorToHex(raw) ?? canvasColorToHex(raw) ?? "";
+	const color = parseCssColor(raw);
+	if (!color) return canvasColorToHex(raw, background) ?? "";
+	// Mermaid and PNG export require opaque hex colors. Removing alpha would
+	// turn a subtle surface tint into a completely different, saturated fill.
+	const backdrop = parseCssColor(background);
+	if (!backdrop) return "";
+	return rgbToHex({
+		r: color.r * color.a + backdrop.r * (1 - color.a),
+		g: color.g * color.a + backdrop.g * (1 - color.a),
+		b: color.b * color.a + backdrop.b * (1 - color.a),
+	});
 }
 
 /**
@@ -113,11 +132,21 @@ export function readMermaidTheme(element?: Element): ResolvedMermaidTheme {
 	const target = element ?? document.documentElement;
 	const mode = detectColorMode(target);
 	const style = getComputedStyle(target);
-	const resolve = (name: string) => resolveTokenColor(style, name);
+	const fallback = FALLBACK_MERMAID_TOKENS[mode];
+	const pageBackground =
+		resolveTokenColor(style, "--background", fallback.background) ||
+		fallback.background;
+	// Cline has an explicit opaque card surface; legacy hosts can still provide
+	// --card. Composite either role if a host intentionally makes it translucent.
+	const background =
+		resolveTokenColor(style, TOKEN_VARIABLES.background, pageBackground) ||
+		resolveTokenColor(style, "--card", pageBackground) ||
+		fallback.background;
+	const resolve = (name: string) => resolveTokenColor(style, name, background);
 	// Explicit per-key reads keep the result typed without a key cast; an empty
 	// string means "unresolved" and is replaced by the palette in normalize.
 	const raw: MermaidThemeTokens = {
-		background: resolve(TOKEN_VARIABLES.background),
+		background,
 		border: resolve(TOKEN_VARIABLES.border),
 		error: resolve(TOKEN_VARIABLES.error),
 		foreground: resolve(TOKEN_VARIABLES.foreground),
