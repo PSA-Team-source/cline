@@ -520,15 +520,8 @@ semantics:
 }
 ```
 
-Author solid palette values and semantic roles, then run `bun run generate:theme`
-to update the alpha palette, scoped tokens and component mappings. Generated
-alpha values reproduce solids over `--neutral-1` within 3/255 per sRGB channel.
-
-Use `--accent-foreground`, `--error-text` and the other status `-text` roles for
-small colored text. Filled controls pair `--primary` with `--primary-foreground`
-or status `-solid` with `-contrast`; the fill itself is not a text color.
-`--card` blends with the host surface, while `--card-surface` provides an opaque
-background for diagrams and exports. Existing token names remain available.
+See [Theme usage](./README.md#theme-usage) for palette generation and choosing
+readable text and fill roles.
 
 Use the small `--brand-*` palette only for branded artwork. Normal controls
 should prefer visual/status roles or shadcn semantic tokens so they continue to

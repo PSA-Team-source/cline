@@ -646,7 +646,7 @@ export type MermaidColorMode = "dark" | "light";
 
 /** Resolved Cline design tokens the diagram theme is derived from. */
 export interface MermaidThemeTokens {
-	/** Opaque diagram surface (`--card-surface`); also the PNG background fill. */
+	/** Diagram surface (`--card`); also the PNG background fill. */
 	background: string;
 	border: string;
 	/** Destructive/error role color (`--destructive`). */
@@ -658,13 +658,13 @@ export interface MermaidThemeTokens {
 	primary: string;
 }
 
-/** sRGB defaults from `theme/tokens.css`, used when tokens can't be read. */
+/** Palette values from `theme/palette.css`, used when tokens can't be read. */
 export const FALLBACK_MERMAID_TOKENS: Record<
 	MermaidColorMode,
 	MermaidThemeTokens
 > = {
 	dark: {
-		background: "#212127",
+		background: "#1a1a1f",
 		border: "#282830",
 		error: "#c5372f",
 		foreground: "#fcfcfc",
@@ -673,7 +673,7 @@ export const FALLBACK_MERMAID_TOKENS: Record<
 		primary: "#6464ec",
 	},
 	light: {
-		background: "#efeff7",
+		background: "#f3f3fa",
 		border: "#e3e3ee",
 		error: "#df3322",
 		foreground: "#1f1f25",

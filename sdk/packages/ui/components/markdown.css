@@ -466,7 +466,7 @@
 	margin: 0;
 	padding: 0;
 	border: 0;
-	background: var(--card-surface, var(--card));
+	background: var(--card);
 	color: var(--foreground);
 }
 

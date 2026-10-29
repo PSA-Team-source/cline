@@ -1,5 +1,4 @@
-/* Preserve readable Markdown text roles over generic content utilities. */
-@import "@cline/ui/components/markdown.css";
+@import "@cline/ui/components/markdown.css" layer(components);
 
 :root {
 	color-scheme: light;
@@ -21,6 +20,14 @@
 
 	body {
 		@apply m-0 bg-background text-base font-normal text-foreground;
+	}
+}
+
+/* Streamdown uses text-primary for links; retain the readable text role
+ * without changing the precedence of Markdown layout styles. */
+@layer utilities {
+	:is(.markdown, .cline-markdown) [data-streamdown="link"] {
+		color: var(--accent-foreground);
 	}
 }
 

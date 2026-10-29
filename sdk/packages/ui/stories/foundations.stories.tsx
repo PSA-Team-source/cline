@@ -24,21 +24,16 @@ const visualRoles = [
 	["Border 1", "--border-1"],
 	["Border 2", "--border-2"],
 	["Focus ring", "--focus-ring"],
-	["Neutral solid", "--neutral-solid"],
-	["Neutral contrast", "--neutral-contrast"],
 ] as const;
 
 const semanticColors = [
 	["Background", "--background"],
 	["Foreground", "--foreground"],
-	["Card (translucent)", "--card"],
-	["Card surface (opaque)", "--card-surface"],
+	["Card", "--card"],
 	["Primary", "--primary"],
 	["Secondary", "--secondary"],
 	["Muted", "--muted"],
 	["Accent", "--accent"],
-	["Accent hover", "--accent-hover"],
-	["Accent border", "--accent-border"],
 	["Destructive", "--destructive"],
 	["Border", "--border"],
 ] as const;
@@ -223,6 +218,9 @@ export const Overview = () => (
 					<p className="text-3xl font-semibold">Inter</p>
 					<p className="text-base text-muted-foreground">
 						Readable product copy with a warm, technical character.
+					</p>
+					<p className="text-xxs text-muted-foreground">
+						Small metadata · text-xxs · 11px at the default 15px root size
 					</p>
 					<code className="block rounded-md bg-muted p-3 font-mono text-sm">
 						Geist Mono · bun run build

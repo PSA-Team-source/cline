@@ -38,9 +38,6 @@ const visualRoleTokens = [
 	"border-1",
 	"border-2",
 	"focus-ring",
-	"neutral-solid",
-	"neutral-contrast",
-	"neutral-solid-hover",
 ];
 
 const statusRoleTokens = ["success", "warning", "error", "info"].flatMap(
@@ -66,8 +63,6 @@ const semanticTokens = [
 	"muted-foreground",
 	"accent",
 	"accent-foreground",
-	"accent-hover",
-	"accent-border",
 	"destructive",
 	"destructive-foreground",
 	"border",
@@ -100,7 +95,6 @@ const brandTokens = [
 ];
 
 const mappedColorTokens = [
-	"card-surface",
 	...visualRoleTokens,
 	...statusRoleTokens,
 	...semanticTokens.filter(
@@ -173,10 +167,6 @@ function expectVariableOnlyRules(source: string): void {
 			expect(declaration).toMatch(/^--[a-z0-9-]+\s*:/);
 		}
 	}
-}
-
-function paletteRgb(source: string, token: string): number[] {
-	return colorRgb(tokenColor(declarations(source), token));
 }
 
 function declarations(source: string): Record<string, string> {
@@ -340,6 +330,7 @@ describe("@cline/ui theme contract", () => {
 			["normal", 480],
 			["medium", 560],
 			["semibold", 640],
+			["bold", 640],
 		] as const) {
 			expect(root).toContain(`--font-weight-${token}: ${value};`);
 		}
@@ -351,7 +342,6 @@ describe("@cline/ui theme contract", () => {
 		] as const) {
 			expect(dark).toContain(`--font-weight-${token}: ${value};`);
 		}
-		expect(root).toContain("--font-weight-bold: var(--font-weight-semibold);");
 		for (const token of [
 			"--font-sans:",
 			"--font-mono:",
@@ -395,11 +385,6 @@ describe("@cline/ui theme contract", () => {
 		expect(shared).toContain("--accent-foreground: var(--accent-11);");
 		expect(shared).toContain("--secondary: var(--surface-3);");
 		expect(shared).toContain("--secondary-foreground: var(--text-1);");
-		expect(shared).toContain("--neutral-solid: var(--neutral-12);");
-		expect(shared).toContain("--neutral-contrast: var(--neutral-1);");
-		expect(shared).toMatch(
-			/--neutral-solid-hover:\s*color-mix\(\s*in srgb,\s*var\(--neutral-solid\) 90%,\s*var\(--neutral-contrast\)\s*\);/,
-		);
 		expect(shared).toContain("--ring: var(--focus-ring);");
 		expect(shared).toContain("--destructive: var(--error-solid);");
 		for (const status of ["success", "warning"]) {
@@ -410,22 +395,6 @@ describe("@cline/ui theme contract", () => {
 			expect(shared).toContain(`--${status}-surface: var(--${status}-2);`);
 			expect(shared).toContain(`--${status}-border: var(--${status}-a3);`);
 		}
-	});
-
-	it.each([
-		":root",
-		".dark",
-	])("keeps neutral primary text contrast above 4.5:1 in %s at rest and hover", (selector) => {
-		const palette = block(read("palette.css"), selector);
-		const solid = paletteRgb(palette, "neutral-12");
-		const contrast = paletteRgb(palette, "neutral-1");
-		// The role contract above fixes this to an opaque 90%/10% sRGB mix.
-		const hover = solid.map(
-			(value, index) => value * 0.9 + contrast[index] * 0.1,
-		);
-		expect(luminance(solid) < luminance(contrast)).toBe(selector === ":root");
-		expect(contrastRatio(solid, contrast)).toBeGreaterThanOrEqual(4.5);
-		expect(contrastRatio(hover, contrast)).toBeGreaterThanOrEqual(4.5);
 	});
 
 	it.each([
@@ -497,7 +466,7 @@ describe("@cline/ui theme contract", () => {
 	] as const)("matches Mermaid fallbacks to the %s semantic colors", (selector, mode) => {
 		const values = themeValues(selector);
 		for (const [mermaidToken, themeToken] of [
-			["background", "card-surface"],
+			["background", "card"],
 			["border", "border"],
 			["error", "destructive"],
 			["foreground", "foreground"],
@@ -549,13 +518,6 @@ describe("@cline/ui theme contract", () => {
 		expect(rules.map((rule) => declarations(rule.body))).toEqual(
 			globalRules.map((rule) => declarations(rule.body)),
 		);
-		for (const token of [
-			"neutral-solid",
-			"neutral-contrast",
-			"neutral-solid-hover",
-		]) {
-			expect(scoped).toContain(`--${token}:`);
-		}
 	});
 
 	it("provides Tailwind mappings without registering raw palette steps", () => {
@@ -611,7 +573,9 @@ describe("@cline/ui theme contract", () => {
 			/--color-cline-ui-(?:neutral|accent|error|success|warning|info)-(?:a)?\d+:/,
 		);
 		expect(components).toContain('@import "./theme/component-theme.css";');
-		expect(base).toContain('@import "@cline/ui/components/markdown.css";');
+		expect(base).toContain(
+			'@import "@cline/ui/components/markdown.css" layer(components);',
+		);
 		expect(markdown).toContain(":is(.markdown, .cline-markdown)");
 		expect(markdown).not.toContain("@apply");
 		expect(markdown).not.toContain("@layer");

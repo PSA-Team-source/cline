@@ -354,7 +354,6 @@
 	--brand-magenta: oklch(0.75 0.15 330);
 	--brand-periwinkle: oklch(0.69 0.14 275);
 	--brand-cyan: oklch(0.87 0.07 210);
-	/* Opaque surface for chat bubbles, diagrams, and raster exports. */
 	--card-surface: color-mix(in srgb, var(--neutral-2) 50%, var(--neutral-3));
 	/* Solid roles choose brand steps that support white labels. */
 	--primary: var(--accent-9);
@@ -375,51 +374,41 @@
 	--font-weight-normal: 480;
 	--font-weight-medium: 560;
 	--font-weight-semibold: 640;
-	--font-weight-bold: var(--font-weight-semibold);
+	--font-weight-bold: 640;
 	/* 11px at 15px root */
 	--text-xxs: 0.73333rem;
 	--text-xxs--line-height: 1rem;
 	--text-xxs--letter-spacing: 0.0025em;
-
 	/* 12px at 15px root */
 	--text-xs: 0.8rem;
-	--text-xs--line-height: 1.1rem;
+	--text-xs--line-height: 1rem;
 	--text-xs--letter-spacing: 0.0025em;
-
 	/* 13px at 15px root */
 	--text-sm: 0.86667rem;
 	--text-sm--line-height: 1.25rem;
 	--text-sm--letter-spacing: 0em;
-
 	/* 14px at 15px root */
 	--text-md: 0.93333rem;
 	--text-md--line-height: 1.4rem;
 	--text-md--letter-spacing: 0em;
-
 	--text-base: 1rem;
 	--text-base--line-height: 1.5rem;
 	--text-base--letter-spacing: 0em;
-
 	--text-lg: 1.125rem;
 	--text-lg--line-height: 1.625rem;
 	--text-lg--letter-spacing: -0.0025em;
-
 	--text-xl: 1.25rem;
 	--text-xl--line-height: 1.75rem;
 	--text-xl--letter-spacing: -0.005em;
-
 	--text-2xl: 1.5rem;
 	--text-2xl--line-height: 1.875rem;
 	--text-2xl--letter-spacing: -0.00625em;
-
 	--text-3xl: 1.75rem;
 	--text-3xl--line-height: 2.25rem;
 	--text-3xl--letter-spacing: -0.0075em;
-
 	--text-4xl: 2.1875rem;
 	--text-4xl--line-height: 2.5rem;
 	--text-4xl--letter-spacing: -0.01em;
-
 	--text-6xl: 3.75rem;
 	--text-6xl--line-height: 3.75rem;
 	--text-6xl--letter-spacing: -0.025em;
@@ -469,14 +458,6 @@
 	--border-1: var(--neutral-4);
 	--border-2: var(--neutral-5);
 	--focus-ring: var(--accent-8);
-	/* High-emphasis neutral controls invert with the theme. */
-	--neutral-solid: var(--neutral-12);
-	--neutral-contrast: var(--neutral-1);
-	--neutral-solid-hover: color-mix(
-		in srgb,
-		var(--neutral-solid) 90%,
-		var(--neutral-contrast)
-	);
 
 	/* Status roles. Solid surfaces and translucent borders share each status hue. */
 	--success-surface: var(--success-2);
@@ -502,9 +483,7 @@
 	/* Standard shadcn semantic surfaces. */
 	--background: var(--surface-1);
 	--foreground: var(--text-1);
-	/* Translucent cards inherit their backing surface; use --card-surface
-	 * whenever a consumer requires an opaque color. */
-	--card: color-mix(in srgb, var(--neutral-a1), var(--neutral-a2));
+	--card: var(--surface-2);
 	--card-foreground: var(--text-1);
 	--popover: var(--surface-2);
 	--popover-foreground: var(--text-1);
@@ -516,8 +495,6 @@
 	--muted-foreground: var(--text-2);
 	--accent: var(--accent-3);
 	--accent-foreground: var(--accent-11);
-	--accent-hover: var(--accent-4);
-	--accent-border: var(--accent-a4);
 	--destructive: var(--error-solid);
 	--destructive-foreground: var(--error-contrast);
 	--border: var(--border-1);

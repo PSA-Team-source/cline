@@ -192,8 +192,7 @@ mode's `--neutral-1` within 3/255 per sRGB channel. This equivalence applies ove
 at runtime.
 
 Use `--accent-foreground` and the status `-text` roles for small colored text.
-Pair solid fills with their foreground or `-contrast` roles. `--card` is a
-translucent surface; use opaque `--card-surface` for diagrams and exports.
+Pair solid fills with their foreground or `-contrast` roles.
 The existing token names and component APIs remain available. Typography adds
 `--text-xxs` for 11px text at the default 15px root size.
 
@@ -273,11 +272,8 @@ header — from the fence title (```` ```mermaid title="my-diagram" ````), the
 diagram's frontmatter `title:`, or a name derived from its contents — and
 offers zoom, fullscreen, copy, and a Download menu with PNG and Mermaid
 source (`.mmd`) only. Diagrams use Mermaid's `base` theme with variables
-resolved from the live design tokens (`--card-surface`, `--foreground`,
-`--primary`, ...) as concrete sRGB. Hosts without `--card-surface` can still
-provide `--card`; translucent colors are composited over the page background
-before diagram rendering and export. Diagrams follow light/dark (`.dark` on
-the root) and the accent
+resolved from the live design tokens (`--card`, `--foreground`, `--primary`,
+...) as concrete sRGB, follow light/dark (`.dark` on the root) and the accent
 palette, and re-render when either changes; a diagram's own `%%{init}%%`,
 frontmatter `config:`, `classDef`, and `style` still override the site theme.
 PNG exports are opaque (filled with the surface color), rendered at 2x-3x
@@ -314,26 +310,6 @@ The root entry exports `AgentSessionRow`, `AgentSessionRowEditor`, and
 frame, and hover metadata. Hosts retain their icons, actions, rename input,
 menus, data formatting, and session behavior. See the session-row section in
 [ADOPTION.md](./ADOPTION.md) for the slot and trigger/ref contract.
-
-## Theme preview
-
-Representative workflows rendered in Chromium with the production message,
-approval, queue, composer, and Mermaid components. The examples use fixture
-content, with the same state in light and dark mode.
-
-| Workflow | Light | Dark |
-| --- | --- | --- |
-| Conversation awaiting command approval, with a queued follow-up | ![Conversation in light mode](./stories/assets/theme-workflows/conversation-after-light.png) | ![Conversation in dark mode](./stories/assets/theme-workflows/conversation-after-dark.png) |
-| Fullscreen approval-flow diagram, rendered by Mermaid | ![Fullscreen Mermaid in light mode](./stories/assets/theme-workflows/mermaid-fullscreen-after-light.png) | ![Fullscreen Mermaid in dark mode](./stories/assets/theme-workflows/mermaid-fullscreen-after-dark.png) |
-
-[Before/after comparisons and capture details](./stories/assets/theme-workflows/README.md).
-
-<details>
-<summary>Palette and semantic role comparison</summary>
-
-![Theme palette and semantic roles before and after the refresh](./stories/assets/theme-comparison.png)
-
-</details>
 
 ## Storybook
 
