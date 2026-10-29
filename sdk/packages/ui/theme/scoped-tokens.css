@@ -365,37 +365,51 @@
 	--font-weight-normal: 480;
 	--font-weight-medium: 560;
 	--font-weight-semibold: 640;
-	--font-weight-bold: 640;
+	--font-weight-bold: var(--font-weight-semibold);
+	/* 11px at 15px root */
+	--text-xxs: 0.73333rem;
+	--text-xxs--line-height: 1rem;
+	--text-xxs--letter-spacing: 0.0025em;
+
 	/* 12px at 15px root */
 	--text-xs: 0.8rem;
-	--text-xs--line-height: 1rem;
+	--text-xs--line-height: 1.1rem;
 	--text-xs--letter-spacing: 0.0025em;
+
 	/* 13px at 15px root */
 	--text-sm: 0.86667rem;
 	--text-sm--line-height: 1.25rem;
 	--text-sm--letter-spacing: 0em;
+
 	/* 14px at 15px root */
 	--text-md: 0.93333rem;
 	--text-md--line-height: 1.4rem;
 	--text-md--letter-spacing: 0em;
+
 	--text-base: 1rem;
 	--text-base--line-height: 1.5rem;
 	--text-base--letter-spacing: 0em;
+
 	--text-lg: 1.125rem;
 	--text-lg--line-height: 1.625rem;
 	--text-lg--letter-spacing: -0.0025em;
+
 	--text-xl: 1.25rem;
 	--text-xl--line-height: 1.75rem;
 	--text-xl--letter-spacing: -0.005em;
+
 	--text-2xl: 1.5rem;
 	--text-2xl--line-height: 1.875rem;
 	--text-2xl--letter-spacing: -0.00625em;
+
 	--text-3xl: 1.75rem;
 	--text-3xl--line-height: 2.25rem;
 	--text-3xl--letter-spacing: -0.0075em;
+
 	--text-4xl: 2.1875rem;
 	--text-4xl--line-height: 2.5rem;
 	--text-4xl--letter-spacing: -0.01em;
+
 	--text-6xl: 3.75rem;
 	--text-6xl--line-height: 3.75rem;
 	--text-6xl--letter-spacing: -0.025em;
