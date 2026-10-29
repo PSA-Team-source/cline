@@ -658,28 +658,28 @@ export interface MermaidThemeTokens {
 	primary: string;
 }
 
-/** Palette values from `theme/palette.css`, used when tokens can't be read. */
+/** sRGB defaults from `theme/tokens.css`, used when tokens can't be read. */
 export const FALLBACK_MERMAID_TOKENS: Record<
 	MermaidColorMode,
 	MermaidThemeTokens
 > = {
 	dark: {
-		background: "#18191b",
-		border: "#2f2f37",
-		error: "#e54666",
-		foreground: "#fcfcfd",
-		muted: "#212225",
-		mutedForeground: "#b0b4ba",
-		primary: "#6e56cf",
+		background: "#212127",
+		border: "#282830",
+		error: "#c5372f",
+		foreground: "#fcfcfc",
+		muted: "#212127",
+		mutedForeground: "#c0c0c7",
+		primary: "#6464ec",
 	},
 	light: {
-		background: "#f9f9fb",
-		border: "#e8e8ec",
-		error: "#e54666",
-		foreground: "#1c2024",
-		muted: "#f0f0f3",
-		mutedForeground: "#60646c",
-		primary: "#6e56cf",
+		background: "#efeff7",
+		border: "#e3e3ee",
+		error: "#df3322",
+		foreground: "#1f1f25",
+		muted: "#ececf5",
+		mutedForeground: "#3c3c44",
+		primary: "#5e55ed",
 	},
 };
 

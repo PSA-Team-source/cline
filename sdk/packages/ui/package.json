@@ -138,6 +138,7 @@
 		"test:package": "bun run build && bun scripts/smoke-package.ts",
 		"typecheck": "bun tsc -p tsconfig.json --noEmit",
 		"test": "bun run check:theme-generated && vitest run --config vitest.config.ts",
+		"test:theme-browser": "bun scripts/test-theme-browser.ts",
 		"test:mermaid-theme-browser": "bun scripts/test-mermaid-theme-browser.ts"
 	},
 	"peerDependencies": {
