@@ -334,9 +334,7 @@ describe("@cline/ui theme contract", () => {
 			/--color-cline-ui-(?:neutral|accent|error|success|warning|info)-(?:a)?\d+:/,
 		);
 		expect(components).toContain('@import "./theme/component-theme.css";');
-		expect(base).toContain(
-			'@import "@cline/ui/components/markdown.css" layer(components);',
-		);
+		expect(base).toContain('@import "@cline/ui/components/markdown.css";');
 		expect(markdown).toContain(":is(.markdown, .cline-markdown)");
 		expect(markdown).not.toContain("@apply");
 		expect(markdown).not.toContain("@layer");

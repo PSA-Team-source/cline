@@ -1,4 +1,5 @@
-@import "@cline/ui/components/markdown.css" layer(components);
+/* Preserve readable Markdown text roles over generic content utilities. */
+@import "@cline/ui/components/markdown.css";
 
 :root {
 	color-scheme: light;
